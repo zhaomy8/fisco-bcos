@@ -1,0 +1,45 @@
+//the original Bills in contract
+Bills.push(Bill({
+            value : 10000,
+			billEndTime : 100000,
+			from : accounts[1],
+			to : bank,
+			isOvered : false
+        }));
+
+//inner accounts
+account1 0xca35b7d915458ef540ade6068dfe2f44e8fa733c
+account2 0x14723a09acff6d2a60dcdf7aa4aff308fddc160c
+account3 0x4b0897b0513fdc7c541b6d9d7e929c4e5364d2db 
+
+cd ~/asset-app && ./gradlew build
+//test operations
+cd dist && bash bill_run.sh deploy
+bash bill_run.sh Bills 0
+bash bill_run.sh applyForFunde 4000 5
+bash bill_run.sh transferBill 0xca35b7d915458ef540ade6068dfe2f44e8fa733c 0x14723a09acff6d2a60dcdf7aa4aff308fddc160c 5000
+
+bash bill_run.sh showAccount 1
+bash bill_run.sh getBalanceOf 0xca35b7d915458ef540ade6068dfe2f44e8fa733c
+bash bill_run.sh autoPayBill
+bash bill_run.sh Bills 1
+bash bill_run.sh getBalanceOf 0xca35b7d915458ef540ade6068dfe2f44e8fa733c
+bash bill_run.sh Bills 1
+
+bash bill_run.sh purchaseAndMakeBill 0x4b0897b0513fdc7c541b6d9d7e929c4e5364d2db 6000 5
+bash bill_run.sh getBillNum
+bash bill_run.sh Bills 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
