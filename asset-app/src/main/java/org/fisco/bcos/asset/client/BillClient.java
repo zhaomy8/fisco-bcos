@@ -22,6 +22,7 @@ import org.fisco.bcos.web3j.crypto.Keys;
 import org.fisco.bcos.web3j.protocol.Web3j;
 import org.fisco.bcos.web3j.protocol.channel.ChannelEthereumService;
 import org.fisco.bcos.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.fisco.bcos.web3j.tuples.generated.Tuple5;
 import org.fisco.bcos.web3j.tuples.generated.Tuple2;
 import org.fisco.bcos.web3j.tx.gas.StaticGasProvider;
 import org.springframework.context.ApplicationContext;
@@ -176,22 +177,24 @@ public class BillClient {
 			BigInteger result = bill.getBillNum().send();
 			System.out.printf("BillsNum : %s\n",result);
 		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
 			System.out.println("getBillNum failed, error message is  " + e.getMessage());
 		}
 	}
-	/*public void Bills(BigInteger i){
+	public void Bills(BigInteger i){
 		try {
 			String contractAddress = loadBillAddr();
 			Bill bill = Bill.load(contractAddress, web3j, credentials, new StaticGasProvider(gasPrice, gasLimit));
 
 			Tuple5<BigInteger, BigInteger, String, String, Boolean> result = bill.Bills(i).send();
-			System.out.printf("Bills %s: value %s, EndTime: %s,from: %s, to: %s\n", i, result.getValue1,result.getValue2,result.getValue3,result.getValue4);
+			System.out.printf("Bills %s: value %s, EndTime: %s,from: %s, to: %s, isOvered:%s\n", i, result.getValue1(),result.getValue2(),result.getValue3(),result.getValue4(),result.getValue5());
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
 			System.out.println(" show bills failed, error message is  " + e.getMessage());
 		}
-	}*/
+	}
 
 	public void purchase(String _seller, BigInteger _value, BigInteger _lastTime){
 		try {
@@ -258,13 +261,14 @@ public class BillClient {
 		System.out.println(
 				"\t java -cp conf/:lib/*:apps/* org.fisco.bcos.bill.client.BillClient getBalanceOf account");
 
-System.out.println(
+		System.out.println(
 				"\t java -cp conf/:lib/*:apps/* org.fisco.bcos.bill.client.BillClient showAccount i");
-System.out.println(
+		System.out.println(
 				"\t java -cp conf/:lib/*:apps/* org.fisco.bcos.bill.client.BillClient bank");
-System.out.println(
+		System.out.println(
 				"\t java -cp conf/:lib/*:apps/* org.fisco.bcos.bill.client.BillClient Bills i");
-
+		System.out.println(
+				"\t java -cp conf/:lib/*:apps/* org.fisco.bcos.bill.client.BillClient getBillNum");
 		System.out.println(
 				"\t java -cp conf/:lib/*:apps/* org.fisco.bcos.bill.client.BillClient autoPayBill");
 		System.out.println(
@@ -312,13 +316,19 @@ System.out.println(
 			}
 			client.bank();
 			break;
-		/*case "Bills":
+		case "getBillNum":
+			if(args.length < 1){
+				Usage();
+			}
+			client.getBillNum();
+			break;
+		case "Bills":
 			if (args.length < 2) {
 				Usage();
 			}
 			i = new BigInteger(args[1]);
 			client.Bills(i);
-			break;*/
+			break;
 
 		case "autoPayBill":
 			client.autoPay();
